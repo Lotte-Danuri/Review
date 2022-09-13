@@ -33,5 +33,4 @@ public abstract class BaseEntity {
     @LastModifiedBy
     private long updatedBy;
 
-    private LocalDateTime deletedDate;
 }

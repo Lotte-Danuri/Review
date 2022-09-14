@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController()
 @RequiredArgsConstructor
 @RequestMapping("/review")
@@ -28,5 +30,13 @@ public class ReviewController {
     @GetMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> readReviewList(){
         return new ResponseEntity<>(reviewService.readReviewList(), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity updateReview(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid ReviewDto reviewDto){
+        reviewService.updateReview(id,reviewDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -34,10 +34,11 @@ public class ReviewControllerTest {
     public static void initReview(){
         reviewDto =
                 ReviewDto.builder()
-                    .memberId(12)
-                    .productId(12)
-                    .thumbnailImage("")
-                    .contents("test")
+                        .id(11)
+                    .memberId(3)
+                    .productId(1)
+                    .thumbnailImage("updateTest")
+                    .contents("updateTest")
                 .build();
     }
 
@@ -84,6 +85,26 @@ public class ReviewControllerTest {
                 MockMvcRequestBuilders.get(REVIEW_URL)
                         .accept(MediaType.APPLICATION_JSON)
         )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    public void updateReviewControllerTest() throws Exception {
+
+        //given
+        String content = objectMapper.writeValueAsString(reviewDto);
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.patch(REVIEW_URL+"/11")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId","12")
+                                .content(content)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
                 //then
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())

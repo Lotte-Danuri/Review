@@ -46,4 +46,18 @@ public class ReviewService {
                 )
                 .collect(Collectors.toList());
     }
+
+    public void updateReview(Long id, ReviewDto reviewDto) {
+        Review review = getReview(id);
+
+        //TODO thumbnailImage 수정
+        review.updateThunmbnailImage(reviewDto.getThumbnailImage());
+        review.updateContents(reviewDto.getContents());
+
+        reviewRepo.save(review);
+    }
+
+    private Review getReview(Long id){
+        return reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
+    }
 }

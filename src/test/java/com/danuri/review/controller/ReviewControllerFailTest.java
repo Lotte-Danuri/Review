@@ -42,7 +42,7 @@ public class ReviewControllerFailTest {
     }
 
     @Test
-    public void reviewControllerTest() throws Exception {
+    public void saveReviewControllerTest() throws Exception {
 
         //given
         String content = objectMapper.writeValueAsString(reviewDto);
@@ -52,6 +52,42 @@ public class ReviewControllerFailTest {
                         MockMvcRequestBuilders.post(REVIEW_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("memberId","3")
+                                .content(content)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    public void readReviewControllerTest() throws Exception{
+        //given
+        long reviewId = -10;
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.get(REVIEW_URL+"/" + reviewId)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    public void updateReviewControllerTest() throws Exception {
+
+        //given
+        String content = objectMapper.writeValueAsString(reviewDto);
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.patch(REVIEW_URL+"/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId","12")
                                 .content(content)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

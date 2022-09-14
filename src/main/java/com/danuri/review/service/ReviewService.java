@@ -3,9 +3,13 @@ package com.danuri.review.service;
 import com.danuri.review.dto.ReviewDto;
 import com.danuri.review.entity.Review;
 import com.danuri.review.exception.ReviewDuplicationException;
+import com.danuri.review.exception.ReviewNotFoundException;
 import com.danuri.review.repository.ReviewRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -13,10 +17,10 @@ public class ReviewService {
 
     private final ReviewRepo reviewRepo;
 
-    public long save(ReviewDto reviewDto){
+    public long save(ReviewDto reviewDto) {
 
-        if(reviewRepo.findReviewByMemberIdAndProductId
-                (reviewDto.getMemberId(), reviewDto.getProductId()).isPresent()){
+        if (reviewRepo.findReviewByMemberIdAndProductId
+                (reviewDto.getMemberId(), reviewDto.getProductId()).isPresent()) {
             throw new ReviewDuplicationException("이미 리뷰를 작성했습니다.");
         }
 
@@ -27,7 +31,19 @@ public class ReviewService {
                         .productId(reviewDto.getProductId())
                         .thumbnailImage("")
                         .contents(reviewDto.getContents())
-                .build()).getId();
+                        .build()).getId();
     }
 
+    public ReviewDto readReview(Long id) {
+        Review review = reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
+        return new ReviewDto(review);
+    }
+
+    public List<ReviewDto> readReviewList() {
+        List<Review> reviewList = reviewRepo.findByCreatedDateIsNotNull().orElseThrow(() -> new ReviewNotFoundException("리뷰 데이터가 존재하지 않습니다."));
+        return reviewList.stream().map(
+                        review -> new ReviewDto(review)
+                )
+                .collect(Collectors.toList());
+    }
 }

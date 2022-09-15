@@ -30,4 +30,7 @@ public class Reply extends BaseEntity{
         this.deletedDate = deletedDate;
         this.review = review;
     }
+
+    public void updateContents(String contents){ this.contents = contents; }
+    public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
 }

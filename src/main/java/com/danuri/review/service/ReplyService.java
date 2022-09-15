@@ -28,8 +28,17 @@ public class ReplyService {
     }
 
     public ReplyDto getReply(Long id) {
-        Reply reply = replyRepo.findById(id).orElseThrow(() -> new ReplyNotFoundException("리뷰가 존재하지 않습니다."));
+        return new ReplyDto(getReplyById(id));
+    }
 
-        return new ReplyDto(reply);
+    public void updateReply(Long id, ReplyDto replyDto) {
+        Reply reply = getReplyById(id);
+
+        reply.updateContents(replyDto.getContents());
+        replyRepo.save(reply);
+    }
+
+    public Reply getReplyById(Long id){
+        return replyRepo.findById(id).orElseThrow(() -> new ReplyNotFoundException("리뷰가 존재하지 않습니다."));
     }
 }

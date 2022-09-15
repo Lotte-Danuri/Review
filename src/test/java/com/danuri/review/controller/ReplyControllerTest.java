@@ -32,7 +32,7 @@ public class ReplyControllerTest {
     private static void initReply() {
         replyDto = ReplyDto.builder()
                 .reviewId(3)
-                .contents("asdf")
+                .contents("updateTest")
                 .storeId(3)
                 .build();
     }
@@ -67,6 +67,25 @@ public class ReplyControllerTest {
                         MockMvcRequestBuilders.get(REPLY_URL+"/"+replyId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("memberId", "5")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    void updateReplyControllerTest() throws Exception {
+        //given
+        String content = objectMapper.writeValueAsString(replyDto);
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.patch(REPLY_URL+"/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId", "5")
+                                .content(content)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 //then

@@ -76,4 +76,23 @@ class ReplyControllerFailTest {
                 .andDo(print())
                 .andReturn();
     }
+
+    @Test
+    void updateReplyControllerTest() throws Exception {
+        //given
+        String content = objectMapper.writeValueAsString(replyDto);
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.patch(REPLY_URL+"/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId", "5")
+                                .content(content)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(print())
+                .andReturn();
+    }
 }

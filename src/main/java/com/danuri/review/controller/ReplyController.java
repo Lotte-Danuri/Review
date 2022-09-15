@@ -28,8 +28,11 @@ public class ReplyController {
         return new ResponseEntity<>(replyService.getReply(id), HttpStatus.OK);
     }
 
-
-
-
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity updateReply(@PathVariable("id")Long id,
+                                      @RequestBody @Valid ReplyDto replyDto){
+        replyService.updateReply(id, replyDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 }

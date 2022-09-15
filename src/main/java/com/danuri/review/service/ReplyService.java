@@ -8,6 +8,8 @@ import com.danuri.review.repository.ReplyRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ReplyService {
@@ -40,5 +42,12 @@ public class ReplyService {
 
     public Reply getReplyById(Long id){
         return replyRepo.findById(id).orElseThrow(() -> new ReplyNotFoundException("리뷰가 존재하지 않습니다."));
+    }
+
+    public void deleteReply(Long id) {
+        Reply reply = getReplyById(id);
+
+        reply.updateDeletedDate(LocalDateTime.now());
+        replyRepo.save(reply);
     }
 }

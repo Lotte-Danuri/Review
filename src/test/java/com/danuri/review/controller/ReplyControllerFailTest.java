@@ -95,4 +95,23 @@ class ReplyControllerFailTest {
                 .andDo(print())
                 .andReturn();
     }
+
+    @Test
+    void deleteReplyControllerTest() throws Exception{
+
+        //given
+        String replyId = "999";
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.delete(REPLY_URL+"/"+replyId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId", "5")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(print())
+                .andReturn();
+    }
 }

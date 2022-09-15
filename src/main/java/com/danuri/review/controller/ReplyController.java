@@ -35,4 +35,9 @@ public class ReplyController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity deleteReply(@PathVariable("id")Long id){
+        replyService.deleteReply(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

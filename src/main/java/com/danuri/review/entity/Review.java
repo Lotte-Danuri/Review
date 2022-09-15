@@ -31,5 +31,5 @@ public class Review extends BaseEntity{
 
     public void updateThunmbnailImage(String thumbnailImage){ this.thumbnailImage = thumbnailImage; }
     public void updateContents(String contents){ this.contents = contents; }
-    public void updateDeleteDate(String deleteDate){ this.deletedDate = deletedDate; }
+    public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
 }

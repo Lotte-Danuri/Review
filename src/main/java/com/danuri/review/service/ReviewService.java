@@ -8,6 +8,7 @@ import com.danuri.review.repository.ReviewRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,14 @@ public class ReviewService {
         reviewRepo.save(review);
     }
 
+    public void deleteReview(Long id) {
+        Review review = getReview(id);
+        review.updateDeletedDate(LocalDateTime.now());
+        reviewRepo.save(review);
+    }
+
     private Review getReview(Long id){
         return reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
     }
+
 }

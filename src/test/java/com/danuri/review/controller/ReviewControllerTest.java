@@ -111,4 +111,24 @@ public class ReviewControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void deleteReviewControllerTest() throws Exception {
+
+        //given
+        String content = objectMapper.writeValueAsString(reviewDto);
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.delete(REVIEW_URL+"/11")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId","15")
+                                .content(content)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andReturn();
+    }
+
 }

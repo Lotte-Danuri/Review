@@ -39,4 +39,10 @@ public class ReviewController {
         reviewService.updateReview(id,reviewDto);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity deleteReview(@PathVariable("id") Long id){
+        reviewService.deleteReview(id);
+        return new ResponseEntity((HttpStatus.OK));
+    }
 }

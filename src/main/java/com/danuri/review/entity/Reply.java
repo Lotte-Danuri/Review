@@ -5,37 +5,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @NoArgsConstructor
-@Entity
-public class Review extends BaseEntity{
+public class Reply extends BaseEntity{
 
-    private long memberId;
-    private long productId;
+    private long reviewId;
 
-    private String thumbnailImage;
     private String contents;
-
+    private long storeId;
     private LocalDateTime deletedDate;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Reply reply;
+    @OneToOne(mappedBy = "reply")
+    private Review review;
 
     @Builder
-    private Review(long memberId, long productId, String thumbnailImage, String contents, LocalDateTime deletedDate){
-        this.memberId = memberId;
-        this.productId = productId;
-        this.thumbnailImage = thumbnailImage;
+    public Reply(long reviewId, String contents, long storeId, LocalDateTime deletedDate, Review review) {
+        this.reviewId = reviewId;
         this.contents = contents;
+        this.storeId = storeId;
         this.deletedDate = deletedDate;
+        this.review = review;
     }
 
-    public void updateThunmbnailImage(String thumbnailImage){ this.thumbnailImage = thumbnailImage; }
     public void updateContents(String contents){ this.contents = contents; }
     public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
 }

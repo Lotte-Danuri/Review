@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,6 +21,10 @@ public class Review extends BaseEntity{
     private String contents;
 
     private LocalDateTime deletedDate;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Reply reply;
 
     @Builder
     private Review(long memberId, long productId, String thumbnailImage, String contents, LocalDateTime deletedDate){

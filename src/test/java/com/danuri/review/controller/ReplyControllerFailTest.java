@@ -57,4 +57,23 @@ class ReplyControllerFailTest {
                 .andDo(print())
                 .andReturn();
     }
+
+    @Test
+    void getReplyControllerTest() throws Exception{
+
+        //given
+        String replyId = "999";
+
+        //when
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.get(REPLY_URL+"/"+replyId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("memberId", "5")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                //then
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(print())
+                .andReturn();
+    }
 }

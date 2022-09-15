@@ -1,5 +1,6 @@
 package com.danuri.review.dto;
 
+import com.danuri.review.entity.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,11 @@ public class ReplyDto {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    private String createdBy;
-    private String updatedBy;
+    private long createdBy;
+    private long updatedBy;
 
     @Builder
-    public ReplyDto(long reviewId, String contents, long storeId, LocalDateTime createdDate, LocalDateTime updatedDate, String createdBy, String updatedBy) {
+    public ReplyDto(long reviewId, String contents, long storeId, LocalDateTime createdDate, LocalDateTime updatedDate, long createdBy, long updatedBy) {
         this.reviewId = reviewId;
         this.contents = contents;
         this.storeId = storeId;
@@ -30,5 +31,15 @@ public class ReplyDto {
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+    }
+
+    public ReplyDto(Reply reply) {
+        this.reviewId = reply.getReviewId();
+        this.contents = reply.getContents();
+        this.storeId = reply.getStoreId();
+        this.createdDate = reply.getCreatedDate();
+        this.updatedDate = reply.getUpdatedDate();
+        this.createdBy = reply.getCreatedBy();
+        this.updatedBy = reply.getUpdatedBy();
     }
 }

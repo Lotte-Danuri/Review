@@ -31,7 +31,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.readReview(id), HttpStatus.OK);
     }
     @GetMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(value = "리뷰 조회", notes = "모든 리뷰를 조회한다.")
+    @ApiOperation(value = "리뷰 조회", notes = "모든 리뷰를 조회한다..")
     public ResponseEntity<?> readReviewList(){
         return new ResponseEntity<>(reviewService.readReviewList(), HttpStatus.OK);
     }

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ReplyRepo extends JpaRepository<Reply, Long> {
-    Optional<Reply> findByReviewId(long reviewId);
+    Optional<Reply> findByReviewId(Long reviewId);
 }

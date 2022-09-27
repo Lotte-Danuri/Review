@@ -17,7 +17,7 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @CreatedDate
     @Column(updatable = false)
@@ -25,12 +25,16 @@ public abstract class BaseEntity {
 
     @CreatedBy
     @Column(updatable = false)
-    private long createdBy;
+    private Long createdBy;
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
     @LastModifiedBy
-    private long updatedBy;
+    private Long updatedBy;
+
+    private LocalDateTime deletedDate;
+
+    public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
 
 }

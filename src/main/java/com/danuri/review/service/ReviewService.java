@@ -8,6 +8,7 @@ import com.danuri.review.repository.ReviewRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class ReviewService {
 
     private final ReviewRepo reviewRepo;
 
-    public long save(ReviewDto reviewDto) {
+    public Long save(ReviewDto reviewDto) {
 
         if (reviewRepo.findReviewByMemberIdAndProductId
                 (reviewDto.getMemberId(), reviewDto.getProductId()).isPresent()) {
@@ -37,31 +38,29 @@ public class ReviewService {
 
     public ReviewDto readReview(Long id) {
         Review review = reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
-        return new ReviewDto(review);
+        return ReviewDto.from(review);
     }
 
     public List<ReviewDto> readReviewList() {
         List<Review> reviewList = reviewRepo.findByCreatedDateIsNotNull().orElseThrow(() -> new ReviewNotFoundException("리뷰 데이터가 존재하지 않습니다."));
         return reviewList.stream().map(
-                        review -> new ReviewDto(review)
+                        ReviewDto::from
                 )
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     public void updateReview(Long id, ReviewDto reviewDto) {
         Review review = getReview(id);
 
         //TODO thumbnailImage 수정
         review.updateThunmbnailImage(reviewDto.getThumbnailImage());
         review.updateContents(reviewDto.getContents());
-
-        reviewRepo.save(review);
     }
 
+    @Transactional
     public void deleteReview(Long id) {
         Review review = getReview(id);
         review.updateDeletedDate(LocalDateTime.now());
-        reviewRepo.save(review);
     }
 
     private Review getReview(Long id){

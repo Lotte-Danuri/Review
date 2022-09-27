@@ -14,28 +14,24 @@ import java.time.LocalDateTime;
 @Entity
 public class Review extends BaseEntity{
 
-    private long memberId;
-    private long productId;
+    private Long memberId;
+    private Long productId;
 
     private String thumbnailImage;
     private String contents;
-
-    private LocalDateTime deletedDate;
 
     @OneToOne
     @JoinColumn(name = "id")
     private Reply reply;
 
     @Builder
-    private Review(long memberId, long productId, String thumbnailImage, String contents, LocalDateTime deletedDate){
+    private Review(Long memberId, Long productId, String thumbnailImage, String contents, LocalDateTime deletedDate){
         this.memberId = memberId;
         this.productId = productId;
         this.thumbnailImage = thumbnailImage;
         this.contents = contents;
-        this.deletedDate = deletedDate;
     }
 
     public void updateThunmbnailImage(String thumbnailImage){ this.thumbnailImage = thumbnailImage; }
     public void updateContents(String contents){ this.contents = contents; }
-    public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
 }

@@ -11,19 +11,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReplyDto {
 
-    private long reviewId;
+    private Long reviewId;
 
     private String contents;
-    private long storeId;
+    private Long storeId;
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    private long createdBy;
-    private long updatedBy;
+    private Long createdBy;
+    private Long updatedBy;
 
     @Builder
-    public ReplyDto(long reviewId, String contents, long storeId, LocalDateTime createdDate, LocalDateTime updatedDate, long createdBy, long updatedBy) {
+    public ReplyDto(Long reviewId, String contents, Long storeId, LocalDateTime createdDate, LocalDateTime updatedDate, Long createdBy, Long updatedBy) {
         this.reviewId = reviewId;
         this.contents = contents;
         this.storeId = storeId;

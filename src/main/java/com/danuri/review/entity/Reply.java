@@ -13,24 +13,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Reply extends BaseEntity{
 
-    private long reviewId;
+    private Long reviewId;
 
     private String contents;
-    private long storeId;
-    private LocalDateTime deletedDate;
+    private Long storeId;
 
     @OneToOne(mappedBy = "reply")
     private Review review;
 
     @Builder
-    public Reply(long reviewId, String contents, long storeId, LocalDateTime deletedDate, Review review) {
+    public Reply(Long reviewId, String contents, Long storeId, LocalDateTime deletedDate, Review review) {
         this.reviewId = reviewId;
         this.contents = contents;
         this.storeId = storeId;
-        this.deletedDate = deletedDate;
         this.review = review;
     }
 
     public void updateContents(String contents){ this.contents = contents; }
-    public void updateDeletedDate(LocalDateTime deletedDate){ this.deletedDate = deletedDate; }
+
 }

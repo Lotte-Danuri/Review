@@ -34,8 +34,8 @@ public class ReviewControllerFailTest {
     public static void initReview(){
         reviewDto =
                 ReviewDto.builder()
-                        .memberId(3)
-                        .productId(1)
+                        .memberId(3L)
+                        .productId(1L)
                         .thumbnailImage("")
                         .contents("test")
                         .build();
@@ -64,7 +64,7 @@ public class ReviewControllerFailTest {
     @Test
     public void readReviewControllerTest() throws Exception{
         //given
-        long reviewId = -10;
+        Long reviewId = -10L;
 
         //when
         MvcResult result = mockMvc.perform(

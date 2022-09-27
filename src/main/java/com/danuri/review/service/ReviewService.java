@@ -5,10 +5,13 @@ import com.danuri.review.entity.Review;
 import com.danuri.review.exception.ReviewDuplicationException;
 import com.danuri.review.exception.ReviewNotFoundException;
 import com.danuri.review.repository.ReviewRepo;
+import com.danuri.review.util.S3Upload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,19 +22,20 @@ public class ReviewService {
 
     private final ReviewRepo reviewRepo;
 
-    public Long save(ReviewDto reviewDto) {
+    private final S3Upload s3Upload;
+
+    public Long save(ReviewDto reviewDto, MultipartFile multipartFile) {
 
         if (reviewRepo.findReviewByMemberIdAndProductId
                 (reviewDto.getMemberId(), reviewDto.getProductId()).isPresent()) {
             throw new ReviewDuplicationException("이미 리뷰를 작성했습니다.");
         }
 
-        //TODO thumbnailImage 수정
         return reviewRepo.save(
                 Review.builder()
                         .memberId(reviewDto.getMemberId())
                         .productId(reviewDto.getProductId())
-                        .thumbnailImage("")
+                        .thumbnailImage(uploadImage(multipartFile))
                         .contents(reviewDto.getContents())
                         .build()).getId();
     }
@@ -49,11 +53,10 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
     @Transactional
-    public void updateReview(Long id, ReviewDto reviewDto) {
+    public void updateReview(Long id, ReviewDto reviewDto, MultipartFile multipartFile) {
         Review review = getReview(id);
 
-        //TODO thumbnailImage 수정
-        review.updateThunmbnailImage(reviewDto.getThumbnailImage());
+        review.updateThunmbnailImage(uploadImage(multipartFile));
         review.updateContents(reviewDto.getContents());
     }
 
@@ -65,6 +68,15 @@ public class ReviewService {
 
     private Review getReview(Long id){
         return reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
+    }
+
+    private String uploadImage(MultipartFile multipartFile){
+        try {
+            return s3Upload.upload(multipartFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 }

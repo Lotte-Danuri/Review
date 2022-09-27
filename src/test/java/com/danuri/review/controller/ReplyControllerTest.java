@@ -31,9 +31,9 @@ public class ReplyControllerTest {
     @BeforeAll
     private static void initReply() {
         replyDto = ReplyDto.builder()
-                .reviewId(3)
+                .reviewId(3L)
                 .contents("updateTest")
-                .storeId(3)
+                .storeId(3L)
                 .build();
     }
 

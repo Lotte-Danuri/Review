@@ -39,7 +39,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.readReviewList(), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "리뷰 수정", notes = "리뷰 아이디로 리뷰를 수정한다.")
     public ResponseEntity updateReview(
             @PathVariable("id") Long id,

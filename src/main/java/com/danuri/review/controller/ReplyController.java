@@ -14,6 +14,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reply")
+@CrossOrigin("*")
 public class ReplyController {
 
     private final ReplyService replyService;

@@ -30,9 +30,9 @@ public class ReviewController {
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(value = "리뷰 조회", notes = "리뷰 아이디로 리뷰를 조회한다.")
+    @ApiOperation(value = "리뷰 조회", notes = "상품 아이디로 리뷰를 조회한다.")
     public ResponseEntity<?> readReview(@PathVariable Long id){
-        return new ResponseEntity<>(reviewService.readReview(id), HttpStatus.OK);
+        return new ResponseEntity<>(reviewService.readReviewsByProductId(id), HttpStatus.OK);
     }
     @GetMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "리뷰 조회", notes = "모든 리뷰를 조회한다.")

@@ -12,4 +12,6 @@ public interface ReviewRepo extends JpaRepository<Review,Long> {
     Optional<Review> findReviewByMemberIdAndProductId(Long memberId, Long productId);
 
     Optional<List<Review>> findByCreatedDateIsNotNull();
+
+    Optional<List<Review>> findByProductId(Long id);
 }

@@ -40,9 +40,12 @@ public class ReviewService {
                         .build()).getId();
     }
 
-    public ReviewDto readReview(Long id) {
-        Review review = reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
-        return ReviewDto.from(review);
+    public List<ReviewDto> readReviewsByProductId(Long id) {
+        List<Review> reviewList = reviewRepo.findByProductId(id).orElseThrow(()->new ReviewNotFoundException("리뷰 데이터가 존재하지 않습니다."));
+        return reviewList.stream().map(
+                ReviewDto::from
+        )
+                .collect(Collectors.toList());
     }
 
     public List<ReviewDto> readReviewList() {

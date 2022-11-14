@@ -82,4 +82,8 @@ public class ReviewService {
         }
     }
 
+    public List<ReviewDto> getReviewsByUserId(long parseLong) {
+        return null;
+    }
+
 }

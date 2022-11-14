@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController()
 @RequiredArgsConstructor
-@RequestMapping("/review")
+@RequestMapping("/")
 @CrossOrigin("*")
 public class ReviewController {
 
@@ -27,6 +27,12 @@ public class ReviewController {
                                @RequestPart MultipartFile image) {
         reviewService.save(reviewDto, image);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping(value="user")
+    @ApiOperation(value = "리뷰 조회", notes = "유저 아이디로 리뷰를 조회한다.")
+    public ResponseEntity<?> getReviewsByUserId(@RequestHeader String memberId){
+        return new ResponseEntity<>(reviewService.getReviewsByUserId(Long.parseLong(memberId)), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})

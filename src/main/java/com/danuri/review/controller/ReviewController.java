@@ -35,7 +35,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.getReviewsByUserId(Long.parseLong(memberId)), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/code/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "리뷰 조회", notes = "상품 코드로 리뷰를 조회한다.")
     public ResponseEntity<?> readReview(@PathVariable Long id){
         return new ResponseEntity<>(reviewService.readReviewsByProductCode(id), HttpStatus.OK);

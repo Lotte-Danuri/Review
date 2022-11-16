@@ -15,6 +15,7 @@ public class ReviewDto {
     private Long productCode;
 
     private String thumbnailImage;
+    private String title;
     private String contents;
 
     private LocalDateTime createdDate;
@@ -27,11 +28,12 @@ public class ReviewDto {
     private MemberDto memberDto;
 
     @Builder
-    private ReviewDto(Long id, Long memberId, Long productCode, String thumbnailImage, String contents, LocalDateTime createdDate, LocalDateTime updatedDate, Long createdBy, Long updatedBy) {
+    private ReviewDto(Long id, Long memberId, Long productCode, String thumbnailImage, String title, String contents, LocalDateTime createdDate, LocalDateTime updatedDate, Long createdBy, Long updatedBy) {
         this.id = id;
         this.memberId = memberId;
         this.productCode = productCode;
         this.thumbnailImage = thumbnailImage;
+        this.title = title;
         this.contents = contents;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -45,6 +47,7 @@ public class ReviewDto {
                 .memberId(review.getMemberId())
                 .productCode(review.getProductCode())
                 .thumbnailImage(review.getThumbnailImage())
+                .title(review.getTitle())
                 .contents(review.getContents())
                 .createdDate(review.getCreatedDate())
                 .updatedDate(review.getUpdatedDate())

@@ -16,8 +16,8 @@ public class Review extends BaseEntity{
 
     private Long memberId;
     private Long productCode;
-
     private String thumbnailImage;
+    private String title;
     private String contents;
 
     @OneToOne
@@ -25,13 +25,14 @@ public class Review extends BaseEntity{
     private Reply reply;
 
     @Builder
-    private Review(Long memberId, Long productCode, String thumbnailImage, String contents, LocalDateTime deletedDate){
+    private Review(Long memberId, Long productCode, String thumbnailImage, String title, String contents, LocalDateTime deletedDate){
         this.memberId = memberId;
         this.productCode = productCode;
         this.thumbnailImage = thumbnailImage;
+        this.title = title;
         this.contents = contents;
     }
 
-    public void updateThunmbnailImage(String thumbnailImage){ this.thumbnailImage = thumbnailImage; }
+    public void updateThumbnailImage(String thumbnailImage){ this.thumbnailImage = thumbnailImage; }
     public void updateContents(String contents){ this.contents = contents; }
 }

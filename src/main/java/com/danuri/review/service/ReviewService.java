@@ -45,6 +45,7 @@ public class ReviewService {
                         .productCode(reviewDto.getProductCode())
                         .thumbnailImage(uploadImage(multipartFile))
                         .contents(reviewDto.getContents())
+                        .title(reviewDto.getTitle())
                         .build()).getId();
     }
 
@@ -79,7 +80,7 @@ public class ReviewService {
     public void updateReview(Long id, ReviewDto reviewDto, MultipartFile multipartFile) {
         Review review = getReview(id);
 
-        review.updateThunmbnailImage(uploadImage(multipartFile));
+        review.updateThumbnailImage(uploadImage(multipartFile));
         review.updateContents(reviewDto.getContents());
     }
 

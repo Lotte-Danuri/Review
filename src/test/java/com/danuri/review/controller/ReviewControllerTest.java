@@ -36,7 +36,7 @@ public class ReviewControllerTest {
                 ReviewDto.builder()
                         .id(11L)
                     .memberId(3L)
-                    .productId(1L)
+                    .productCode(1L)
                     .thumbnailImage("updateTest")
                     .contents("updateTest")
                 .build();

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Review extends BaseEntity{
 
     private Long memberId;
-    private Long productId;
+    private Long productCode;
 
     private String thumbnailImage;
     private String contents;
@@ -25,9 +25,9 @@ public class Review extends BaseEntity{
     private Reply reply;
 
     @Builder
-    private Review(Long memberId, Long productId, String thumbnailImage, String contents, LocalDateTime deletedDate){
+    private Review(Long memberId, Long productCode, String thumbnailImage, String contents, LocalDateTime deletedDate){
         this.memberId = memberId;
-        this.productId = productId;
+        this.productCode = productCode;
         this.thumbnailImage = thumbnailImage;
         this.contents = contents;
     }

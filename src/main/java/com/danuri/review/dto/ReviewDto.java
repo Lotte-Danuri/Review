@@ -3,6 +3,7 @@ package com.danuri.review.dto;
 import com.danuri.review.entity.Review;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ public class ReviewDto {
 
     private Long id;
     private Long memberId;
-    private Long productId;
+    private Long productCode;
 
     private String thumbnailImage;
     private String contents;
@@ -22,11 +23,14 @@ public class ReviewDto {
     private Long createdBy;
     private Long updatedBy;
 
+    @Setter
+    private MemberDto memberDto;
+
     @Builder
-    private ReviewDto(Long id, Long memberId, Long productId, String thumbnailImage, String contents, LocalDateTime createdDate, LocalDateTime updatedDate, Long createdBy, Long updatedBy) {
+    private ReviewDto(Long id, Long memberId, Long productCode, String thumbnailImage, String contents, LocalDateTime createdDate, LocalDateTime updatedDate, Long createdBy, Long updatedBy) {
         this.id = id;
         this.memberId = memberId;
-        this.productId = productId;
+        this.productCode = productCode;
         this.thumbnailImage = thumbnailImage;
         this.contents = contents;
         this.createdDate = createdDate;
@@ -35,11 +39,11 @@ public class ReviewDto {
         this.updatedBy = updatedBy;
     }
 
-    public static ReviewDto from(Review review){
+    public static ReviewDto from(Review review) {
         return ReviewDto.builder()
                 .id(review.getId())
                 .memberId(review.getMemberId())
-                .productId(review.getProductId())
+                .productCode(review.getProductCode())
                 .thumbnailImage(review.getThumbnailImage())
                 .contents(review.getContents())
                 .createdDate(review.getCreatedDate())

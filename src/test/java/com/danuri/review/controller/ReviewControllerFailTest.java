@@ -35,7 +35,7 @@ public class ReviewControllerFailTest {
         reviewDto =
                 ReviewDto.builder()
                         .memberId(3L)
-                        .productId(1L)
+                        .productCode(1L)
                         .thumbnailImage("")
                         .contents("test")
                         .build();

@@ -32,6 +32,7 @@ public class ReviewController {
     @GetMapping(value="")
     @ApiOperation(value = "리뷰 조회", notes = "유저 아이디로 리뷰를 조회한다.")
     public ResponseEntity<?> getReviewsByUserId(@RequestHeader String memberId){
+        System.out.println("리뷰 조회 By memberId");
         return new ResponseEntity<>(reviewService.getReviewsByUserId(Long.parseLong(memberId)), HttpStatus.OK);
     }
 

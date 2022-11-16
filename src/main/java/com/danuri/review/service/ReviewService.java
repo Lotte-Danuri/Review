@@ -49,16 +49,22 @@ public class ReviewService {
     }
 
     public List<ReviewDto> readReviewsByProductCode(Long id) {
-        List<Review> reviewList = reviewRepo.findByProductCode(id).orElseThrow(()->new ReviewNotFoundException("리뷰 데이터가 존재하지 않습니다."));
-        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitBreaker");
-        return reviewList.stream().map(
+        List<Review> reviewList = reviewRepo.findByProductCode(id).orElseThrow(() -> new ReviewNotFoundException("리뷰 데이터가 존재하지 않습니다."));
+        List<ReviewDto> reviewDtoList = reviewList.stream().map(
                         ReviewDto::from
                 )
-//                .forEach((reviewDto -> {
-//                    reviewDto.setMemberDto(circuitBreaker.run(
-//                            memberClient.getMemberById(reviewDto.getMemberId()),throwable -> new )
-//                }))
                 .collect(Collectors.toList());
+
+        reviewDtoList.forEach((this::setMemberDto));
+
+        return reviewDtoList;
+    }
+
+    public void setMemberDto(ReviewDto reviewDto) {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitBreaker");
+        reviewDto.setMemberDto(circuitBreaker.run(() ->
+                memberClient.getMemberById((reviewDto.getMemberId())), throwable -> new MemberDto()
+        ));
     }
 
     public List<ReviewDto> readReviewList() {
@@ -68,6 +74,7 @@ public class ReviewService {
                 )
                 .collect(Collectors.toList());
     }
+
     @Transactional
     public void updateReview(Long id, ReviewDto reviewDto, MultipartFile multipartFile) {
         Review review = getReview(id);
@@ -82,11 +89,11 @@ public class ReviewService {
         review.updateDeletedDate(LocalDateTime.now());
     }
 
-    private Review getReview(Long id){
+    private Review getReview(Long id) {
         return reviewRepo.findById(id).orElseThrow(() -> new ReviewNotFoundException("존재하지 않는 리뷰입니다."));
     }
 
-    private String uploadImage(MultipartFile multipartFile){
+    private String uploadImage(MultipartFile multipartFile) {
         try {
             return s3Upload.upload(multipartFile);
         } catch (IOException e) {

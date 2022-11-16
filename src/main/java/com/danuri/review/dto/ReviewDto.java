@@ -39,7 +39,7 @@ public class ReviewDto {
         this.updatedBy = updatedBy;
     }
 
-    public static ReviewDto from(Review review){
+    public static ReviewDto from(Review review) {
         return ReviewDto.builder()
                 .id(review.getId())
                 .memberId(review.getMemberId())

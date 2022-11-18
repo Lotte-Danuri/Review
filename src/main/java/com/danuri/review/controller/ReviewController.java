@@ -24,8 +24,9 @@ public class ReviewController {
     @PostMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "리뷰 작성", notes = "리뷰 작성")
     public ResponseEntity save(@RequestPart ReviewDto reviewDto,
-                               @RequestPart MultipartFile image) {
-        reviewService.save(reviewDto, image);
+                               @RequestPart MultipartFile image,
+                               @RequestHeader Long memberId) {
+        reviewService.save(reviewDto, image, memberId);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

@@ -32,16 +32,16 @@ public class ReviewService {
 
     private final MemberClient memberClient;
 
-    public Long save(ReviewDto reviewDto, MultipartFile multipartFile) {
+    public Long save(ReviewDto reviewDto, MultipartFile multipartFile, Long memberId) {
 
         if (reviewRepo.findReviewByMemberIdAndProductCode
-                (reviewDto.getMemberId(), reviewDto.getProductCode()).isPresent()) {
+                (memberId, reviewDto.getProductCode()).isPresent()) {
             throw new ReviewDuplicationException("이미 리뷰를 작성했습니다.");
         }
 
         return reviewRepo.save(
                 Review.builder()
-                        .memberId(reviewDto.getMemberId())
+                        .memberId(memberId)
                         .productCode(reviewDto.getProductCode())
                         .thumbnailImage(uploadImage(multipartFile))
                         .contents(reviewDto.getContents())
